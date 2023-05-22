@@ -1,5 +1,5 @@
 {
-  "name": "jsx-2-html",
+  "name": "jsx-render-to-html",
   "version": "1.0.0",
   "description": "转换 jsx 文件成 html 文件",
   "license": "MIT",
@@ -25,10 +25,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/magicodex/jsx-2-html.git"
+    "url": "git+https://github.com/magicodex/jsx-render-to-html.git"
   },
   "bugs": {
-    "url": "https://github.com/magicodex/jsx-2-html/issues"
+    "url": "https://github.com/magicodex/jsx-render-to-html/issues"
   },
-  "homepage": "https://github.com/magicodex/jsx-2-html#readme"
+  "homepage": "https://github.com/magicodex/jsx-render-to-html#readme"
 }
