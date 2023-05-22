@@ -1,13 +1,15 @@
 "use strict";
 
-var babelCore = require('@babel/core');
-var reactDOMServer = require('react-dom/server');
 var fs = require('fs');
 var path = require('path');
+var babelCore = require('@babel/core');
+var reactDOMServer = require('react-dom/server');
+var beautifyJs = require('js-beautify/js').js;
 
 module.exports = renderToHtmlString;
 
-const DEFAULT_TEMP_FILE_PATH = '~jsx-render-to-html-temp-file.js';
+const OPTIONS_TEMP_FILE_PATH_DEFAULT = '~jsx-render-to-html-temp-file.js';
+const OPTIONS_PRETTY_FORMAT_DEFAULT = false;
 
 /**
  * @description 转换 jsx 内容成 html 内容
@@ -20,7 +22,8 @@ function renderToHtmlString(jsxContent, options) {
   }
 
   options = (options || {});
-  var tempFilePath = (options.tempFilePath || DEFAULT_TEMP_FILE_PATH);
+  var tempFilePath = (options.tempFilePath || OPTIONS_TEMP_FILE_PATH_DEFAULT);
+  var prettyFormat = (options.prettyFormat || OPTIONS_PRETTY_FORMAT_DEFAULT);
 
   // 转换 JSX 成 JS 脚本
   var transformResult = babelCore.transformSync(jsxContent, {
@@ -37,8 +40,16 @@ function renderToHtmlString(jsxContent, options) {
     ]
   });
 
-  // 写入 JS 内容到临时文件
   var jsContent = transformResult.code;
+  // 美化 JS 内容
+  if (prettyFormat) {
+    jsContent = beautifyJs(jsContent, {
+      indent_size: 2,
+      space_in_empty_paren: true
+    });
+  }
+
+  // 写入 JS 内容到临时文件
   fs.writeFileSync(tempFilePath, jsContent);
   // 加载 JS 脚本
   var reactElement = require(tempFilePath);
