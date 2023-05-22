@@ -1,11 +1,10 @@
 "use strict";
 
-var babelCore = require('@babel/core');
-var reactDOMServer = require('react-dom/server');
 var fs = require('fs');
 var path = require('path');
+var renderToHtmlString = require('./render-to-html-string');
 
-module.exports = jsxToHtml;
+module.exports = writeHtmlFileSync;
 
 /**
  * @description 转换 jsx 文件成 html 文件
@@ -13,7 +12,7 @@ module.exports = jsxToHtml;
  * @param {string} htmlPath 
  * @param {object} [options]
  */
-function jsxToHtml(jsxPath, htmlPath, options) {
+function writeHtmlFileSync(jsxPath, htmlPath, options) {
   if (jsxPath === null || jsxPath === undefined) {
     throw new Error('argument#0 "jsxPath" is null/undefined');
   }
@@ -31,38 +30,16 @@ function jsxToHtml(jsxPath, htmlPath, options) {
     flag: 'r'
   });
 
-  // 转换 JSX 成 JS 脚本
-  var transformResult = babelCore.transformSync(jsxContent, {
-    "presets": [
-      [
-        "@babel/preset-react",
-        {
-          "pragma": "React.createElement",
-          "pragmaFrag": "React.Fragment",
-          "throwIfNamespace": true,
-          "runtime": "classic"
-        }
-      ]
-    ]
-  });
-
   var basePath = path.dirname(jsxPath);
   var jsxName = path.basename(jsxPath);
   var jsName = '~' + jsxName + '.js';
   var tempJsPath = path.join(basePath, jsName);
 
-  // 写入 JS 内容到临时文件
-  var jsContent = transformResult.code;
-  fs.writeFileSync(tempJsPath, jsContent);
-  // 加载 JS 脚本
-  var reactElement = require(tempJsPath);
   // 渲染成 HTML 字符串
-  var htmlContent = reactDOMServer.renderToStaticMarkup(reactElement);
+  var htmlContent = renderToHtmlString(jsxContent, {
+    tempFilePath: tempJsPath
+  });
 
   // 写入 HTML 到目的文件
   fs.writeFileSync(htmlPath, htmlContent);
-  // 删除 JS 临时脚本
-  fs.unlink(tempJsPath, function (err) {
-    //
-  });
 }

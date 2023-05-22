@@ -3,7 +3,7 @@
 var assert = require('assert');
 var path = require('path');
 var fs = require('fs');
-var jsToHtml = require('../jsx-to-html');
+var writeHtmlFileSync = require('../write-html-file-sync');
 
 describe('jsxToHtml', function () {
 
@@ -12,7 +12,7 @@ describe('jsxToHtml', function () {
       var jsxPath = path.join(__dirname, './jsx/hello-world.jsx');
       var htmlPath = path.join(__dirname, './jsx/~hello-world.html');
 
-      jsToHtml(jsxPath, htmlPath);
+      writeHtmlFileSync(jsxPath, htmlPath);
       var htmlContent = fs.readFileSync(htmlPath, {
         encoding: 'utf8',
         flag: 'r'

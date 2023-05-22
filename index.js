@@ -1,5 +1,5 @@
 "use strict";
 
-var jsxToHtml = require('./jsx-to-html');
+var writeHtmlFileSync = require('./write-html-file-sync');
 
-module.exports = jsxToHtml;
+module.exports = writeHtmlFileSync;
