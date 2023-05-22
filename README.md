@@ -4,6 +4,7 @@
 ## 代码示例
 ```
 var jsxRenderToHtml = require('jsx-render-to-html');
+var renderToHtmlString = require('jsx-render-to-html/render-to-html-string');
 var sourceJsxPath = ... // 要转换的 JSX 文件路径
 var destHtmlPath = ... // 转换后的 HTML 文件路径
 
@@ -16,9 +17,7 @@ jsxRenderToHtml(sourceJsxPath, destHtmlPath, {
   prettyFormat: true // 默认不对生成的内容做美化格式处理
 });
 
-// 转换 jsx 字符串成 html 字符串
-var renderToHtmlString = require('jsx-render-to-html/render-to-html-string');
-
+// 转换 jsx 字符串成 html 字符串，在转换过程中会生成临时的 JS 文件做编译处理
 var htmlString = renderToHtmlString('JSX字符串', {
   tempFilePath: 'temp.js', // 默认临时生成的 JS 文件路径是 ~jsx-render-to-html-temp-file.js
   prettyFormat: true // 默认不对生成的内容做美化格式处理
