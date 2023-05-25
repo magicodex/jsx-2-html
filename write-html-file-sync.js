@@ -49,7 +49,8 @@ function writeHtmlFileSync(jsxPath, htmlPath, options) {
   // 美化 HTML 内容
   if (prettyFormat) {
     htmlContent = beautifyHtml(htmlContent, {
-      indent_size: 2
+      indent_size: 2,
+      wrap_line_length: 120
     });
   }
 

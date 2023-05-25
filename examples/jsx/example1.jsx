@@ -1,4 +1,4 @@
-var UlList = require('../component/ul-list');
+var UlList = require('./ul-list');
 var React = require('react');
 
 module.exports = <>

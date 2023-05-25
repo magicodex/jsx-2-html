@@ -1,7 +1,6 @@
 "use strict";
 
 var fs = require('fs');
-var path = require('path');
 var babelCore = require('@babel/core');
 var reactDOMServer = require('react-dom/server');
 var beautifyJs = require('js-beautify/js').js;
@@ -45,6 +44,7 @@ function renderToHtmlString(jsxContent, options) {
   if (prettyFormat) {
     jsContent = beautifyJs(jsContent, {
       indent_size: 2,
+      wrap_line_length: 120,
       space_in_empty_paren: true
     });
   }
