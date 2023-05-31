@@ -28,6 +28,7 @@ function writeHtmlFileSync(jsxPath, htmlPath, options) {
   options = (options || {});
   var encoding = (options.encoding || OPTIONS_ENCODING_DEFAULT);
   var prettyFormat = (options.prettyFormat || OPTIONS_PRETTY_FORMAT_DEFAULT);
+  var afterRender = options.afterRender;
 
   // 读取 JSX 文件内容
   var jsxContent = fs.readFileSync(jsxPath, {
@@ -43,7 +44,8 @@ function writeHtmlFileSync(jsxPath, htmlPath, options) {
   // 渲染成 HTML 字符串
   var htmlContent = renderToHtmlString(jsxContent, {
     tempFilePath: tempJsPath,
-    prettyFormat: prettyFormat
+    prettyFormat: prettyFormat,
+    afterRender: afterRender
   });
 
   // 美化 HTML 内容
@@ -52,6 +54,10 @@ function writeHtmlFileSync(jsxPath, htmlPath, options) {
       indent_size: 2,
       wrap_line_length: 120
     });
+  }
+
+  if (typeof afterRender === 'function') {
+    htmlContent = afterRender(htmlContent);
   }
 
   // 写入 HTML 到目的文件
