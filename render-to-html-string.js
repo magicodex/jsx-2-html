@@ -8,8 +8,6 @@ var beautifyJs = require('js-beautify/js').js;
 module.exports = renderToHtmlString;
 
 const OPTIONS_TEMP_FILE_PATH_DEFAULT = '~jsx-render-to-html-temp-file.js';
-const OPTIONS_PRETTY_FORMAT_DEFAULT = false;
-const OPTIONS_DELETE_TEMP_FILE_DEFAULT = true;
 
 /**
  * @description 转换 jsx 内容成 html 内容
@@ -23,8 +21,8 @@ function renderToHtmlString(jsxContent, options) {
 
   options = (options || {});
   var tempFilePath = (options.tempFilePath || OPTIONS_TEMP_FILE_PATH_DEFAULT);
-  var prettyFormat = (options.prettyFormat || OPTIONS_PRETTY_FORMAT_DEFAULT);
-  var deleteTempFile = (options.deleteTempFile && OPTIONS_DELETE_TEMP_FILE_DEFAULT);
+  var prettyFormat = (options.prettyFormat === true);
+  var deleteTempFile = !(options.deleteTempFile === false);
 
   // 转换 JSX 成 JS 脚本
   var transformResult = babelCore.transformSync(jsxContent, {

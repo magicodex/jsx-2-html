@@ -8,8 +8,6 @@ var renderToHtmlString = require('./render-to-html-string');
 module.exports = writeHtmlFileSync;
 
 const OPTIONS_ENCODING_DEFAULT = 'utf8';
-const OPTIONS_PRETTY_FORMAT_DEFAULT = false;
-const OPTIONS_DELETE_TEMP_FILE_DEFAULT = true;
 
 /**
  * @description 转换 jsx 文件成 html 文件
@@ -28,8 +26,8 @@ function writeHtmlFileSync(jsxPath, htmlPath, options) {
 
   options = (options || {});
   var encoding = (options.encoding || OPTIONS_ENCODING_DEFAULT);
-  var prettyFormat = (options.prettyFormat || OPTIONS_PRETTY_FORMAT_DEFAULT);
-  var deleteTempFile = (options.deleteTempFile && OPTIONS_DELETE_TEMP_FILE_DEFAULT);
+  var prettyFormat = (options.prettyFormat === true);
+  var deleteTempFile = !(options.deleteTempFile === false);
   var afterRender = options.afterRender;
 
   // 读取 JSX 文件内容
