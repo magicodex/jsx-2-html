@@ -9,6 +9,7 @@ module.exports = renderToHtmlString;
 
 const OPTIONS_TEMP_FILE_PATH_DEFAULT = '~jsx-render-to-html-temp-file.js';
 const OPTIONS_PRETTY_FORMAT_DEFAULT = false;
+const OPTIONS_DELETE_TEMP_FILE_DEFAULT = true;
 
 /**
  * @description 转换 jsx 内容成 html 内容
@@ -23,6 +24,7 @@ function renderToHtmlString(jsxContent, options) {
   options = (options || {});
   var tempFilePath = (options.tempFilePath || OPTIONS_TEMP_FILE_PATH_DEFAULT);
   var prettyFormat = (options.prettyFormat || OPTIONS_PRETTY_FORMAT_DEFAULT);
+  var deleteTempFile = (options.deleteTempFile && OPTIONS_DELETE_TEMP_FILE_DEFAULT);
 
   // 转换 JSX 成 JS 脚本
   var transformResult = babelCore.transformSync(jsxContent, {
@@ -55,10 +57,13 @@ function renderToHtmlString(jsxContent, options) {
   var reactElement = require(tempFilePath);
   // 渲染成 HTML 字符串
   var htmlContent = reactDOMServer.renderToStaticMarkup(reactElement);
-  // 删除 JS 临时脚本
-  fs.unlink(tempFilePath, function (err) {
-    //
-  });
+
+  if (deleteTempFile) {
+    // 删除 JS 临时脚本
+    fs.unlink(tempFilePath, function (err) {
+      //
+    });
+  }
 
   return htmlContent;
 }

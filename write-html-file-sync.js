@@ -9,6 +9,7 @@ module.exports = writeHtmlFileSync;
 
 const OPTIONS_ENCODING_DEFAULT = 'utf8';
 const OPTIONS_PRETTY_FORMAT_DEFAULT = false;
+const OPTIONS_DELETE_TEMP_FILE_DEFAULT = true;
 
 /**
  * @description 转换 jsx 文件成 html 文件
@@ -28,6 +29,7 @@ function writeHtmlFileSync(jsxPath, htmlPath, options) {
   options = (options || {});
   var encoding = (options.encoding || OPTIONS_ENCODING_DEFAULT);
   var prettyFormat = (options.prettyFormat || OPTIONS_PRETTY_FORMAT_DEFAULT);
+  var deleteTempFile = (options.deleteTempFile && OPTIONS_DELETE_TEMP_FILE_DEFAULT);
   var afterRender = options.afterRender;
 
   // 读取 JSX 文件内容
@@ -45,7 +47,7 @@ function writeHtmlFileSync(jsxPath, htmlPath, options) {
   var htmlContent = renderToHtmlString(jsxContent, {
     tempFilePath: tempJsPath,
     prettyFormat: prettyFormat,
-    afterRender: afterRender
+    deleteTempFile: deleteTempFile
   });
 
   // 美化 HTML 内容
