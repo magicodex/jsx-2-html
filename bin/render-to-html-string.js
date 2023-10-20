@@ -1,9 +1,8 @@
 "use strict";
 
 var fs = require('fs');
-var babelCore = require('@babel/core');
 var reactDOMServer = require('react-dom/server');
-var beautifyJs = require('js-beautify/js').js;
+var transformJsxToJs = require('./transform-jsx-to-js');
 
 module.exports = renderToHtmlString;
 
@@ -26,29 +25,9 @@ function renderToHtmlString(jsxContent, options) {
   var deleteTempFile = !(options.deleteTempFile === false);
 
   // 转换 JSX 成 JS 脚本
-  var transformResult = babelCore.transformSync(jsxContent, {
-    "presets": [
-      [
-        "@babel/preset-react",
-        {
-          "pragma": "React.createElement",
-          "pragmaFrag": "React.Fragment",
-          "throwIfNamespace": true,
-          "runtime": "classic"
-        }
-      ]
-    ]
+  var jsContent = transformJsxToJs(jsxContent, {
+    prettyFormat: prettyFormat
   });
-
-  var jsContent = transformResult.code;
-  // 美化 JS 内容
-  if (prettyFormat) {
-    jsContent = beautifyJs(jsContent, {
-      indent_size: 2,
-      wrap_line_length: 120,
-      space_in_empty_paren: true
-    });
-  }
 
   // 写入 JS 内容到临时文件
   fs.writeFileSync(tempFilePath, jsContent);

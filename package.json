@@ -1,6 +1,6 @@
 {
   "name": "jsx-render-to-html",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "转换 jsx 文件成 html 文件",
   "license": "MIT",
   "author": "mh.z",
