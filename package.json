@@ -1,6 +1,6 @@
 {
   "name": "jsx-render-to-html",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "转换 jsx 文件成 html 文件",
   "license": "MIT",
   "author": "mh.z",
@@ -11,8 +11,7 @@
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
-    "bin/render-to-html-string.js",
-    "bin/write-html-file-sync.js",
+    "bin/",
     "render-to-html-string.js",
     "render-to-html-string.d.ts",
     "index.js",
