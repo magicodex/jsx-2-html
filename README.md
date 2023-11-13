@@ -1,6 +1,11 @@
 # jsx-render-to-html
 转换 jsx 文件成 html 文件。
 
+## 安装依赖
+```
+npm install jsx-render-to-html --save-dev
+```
+
 ## 代码示例
 ```
 var jsxRenderToHtml = require('jsx-render-to-html');
